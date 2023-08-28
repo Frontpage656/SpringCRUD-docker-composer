@@ -7,6 +7,8 @@ services:
       - "8080:8080"
     depends_on:
       - mysqldb
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysqldb:3308/employeedb?useUnicode=true&characterEncoding=utf8&useSSL=false&autoReconnect=true
     networks:
       - mynetworkdb
 
