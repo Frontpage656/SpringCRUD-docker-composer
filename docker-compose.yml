@@ -5,25 +5,26 @@ services:
     restart: always
     ports:
       - "8080:8080"
-    depends_on:
-      - mysqldb
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://mysqldb:3308/employeedb?useUnicode=true&characterEncoding=utf8&useSSL=false&autoReconnect=true
     networks:
       - mynetworkdb
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysqldb:3306/employeedb?allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=utf8&useSSL=false&autoReconnect=true
+      - "SPRING_PROFILES_ACTIVE=docker"
+    depends_on:
+      - mysqldb
 
   mysqldb:
     container_name: mysqldb
     image: mysql
     restart: always
     ports:
-      - "3308:3306"
+      - "3306:3306"
+    networks:
+      - mynetworkdb
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: employeedb
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
-    networks:
-      - mynetworkdb
 
 networks:
   mynetworkdb:
